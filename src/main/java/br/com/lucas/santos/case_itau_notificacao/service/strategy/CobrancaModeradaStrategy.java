@@ -1,5 +1,6 @@
 package br.com.lucas.santos.case_itau_notificacao.service.strategy;
 
+import br.com.lucas.santos.case_itau_notificacao.entities.NotificationEntity;
 import br.com.lucas.santos.case_itau_notificacao.infrastructure.EmailNotificationImpl;
 import br.com.lucas.santos.case_itau_notificacao.infrastructure.SmsNotificationImpl;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,13 @@ public class CobrancaModeradaStrategy implements ChargeStrategy {
     private final EmailNotificationImpl emailNotification;
 
     @Override
-    public void charge(Period period) {
+    public void charge(Period period, NotificationEntity notification) {
         if (period.getDays() > 5 && period.getDays() <= 30){
             String message = "cobrança moderada";
             emailNotification.sendNotification(message);
             smsNotification.sendNotification(message);
 //            sendSms(message);
+            notification.setMessage(message);
             log.info("cobrança feita com sucesso: {}", message);
         }
     }

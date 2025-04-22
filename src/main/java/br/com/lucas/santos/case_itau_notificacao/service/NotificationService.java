@@ -33,15 +33,19 @@ public class NotificationService {
     private final ObjectMapper mapper;
 
     @SqsListener("fila-appNotification")
-    private void listenerQueueNotification(String message) throws JsonProcessingException {
-        mapper.findAndRegisterModules();
-        UserBatch user = mapper.readValue(message, UserBatch.class);
-        notification(user);
+    private void listenerQueueNotification(String message) {
+        try {
+            mapper.findAndRegisterModules();
+            UserBatch user = mapper.readValue(message, UserBatch.class);
+            notification(user);
+        }
+        catch (JsonProcessingException exception) {
+            throw new RuntimeException("Erro na conversão do Json: ", exception);
+        }
     }
 
-    private void notification(UserBatch user) {
+    public void notification(UserBatch user) {
         NotificationEntity notification = mapNotification.toNotification(user);
-        String message = "";
         Period period = Period.between(user.dueDate(), LocalDate.now());
 
         List<ChargeStrategy> strategies = List.of(new CobrancaLeveStrategy(smsNotification, emailNotification),
@@ -49,12 +53,11 @@ public class NotificationService {
                 new CobrancaPesadaStrategy(smsNotification, emailNotification));
 
         for (ChargeStrategy strategy : strategies) {
-            strategy.charge(period);
+            strategy.charge(period, notification);
         }
 
 //        notification.setPath(List.of(ShippingEnum.SMS.getValue(), ShippingEnum.EMAIL.getValue()));
         notification.setShippingDate(LocalDate.now());
-        notification.setMessage(message);
 
         repository.save(notification);
         log.info("notificação salva: {}", notification);
