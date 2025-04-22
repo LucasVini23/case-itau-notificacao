@@ -1,4 +1,4 @@
-package br.com.lucas.santos.case_itau_notificacao.entity;
+package br.com.lucas.santos.case_itau_notificacao.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity(name = "notifications")
 @Data
-public class SentNotification {
+public class NotificationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

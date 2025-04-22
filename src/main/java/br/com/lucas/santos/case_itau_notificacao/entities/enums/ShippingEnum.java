@@ -1,4 +1,4 @@
-package br.com.lucas.santos.case_itau_notificacao.enums;
+package br.com.lucas.santos.case_itau_notificacao.entities.enums;
 
 public enum ShippingEnum {
 

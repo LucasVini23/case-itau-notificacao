@@ -1,4 +1,4 @@
-package br.com.lucas.santos.case_itau_notificacao.entity;
+package br.com.lucas.santos.case_itau_notificacao.entities;
 
 import java.time.LocalDate;
 import java.util.List;

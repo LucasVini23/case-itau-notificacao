@@ -1,4 +1,4 @@
-package br.com.lucas.santos.case_itau_notificacao.config;
+package br.com.lucas.santos.case_itau_notificacao.infrastructure.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
