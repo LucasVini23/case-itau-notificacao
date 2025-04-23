@@ -30,7 +30,7 @@ public class NotificationService {
     private final NotificationRepository repository;
     private final SmsNotificationImpl smsNotification;
     private final EmailNotificationImpl emailNotification;
-    private final ObjectMapper mapper;
+    private ObjectMapper mapper = new ObjectMapper();
 
     @SqsListener("fila-appNotification")
     private void listenerQueueNotification(String message) {

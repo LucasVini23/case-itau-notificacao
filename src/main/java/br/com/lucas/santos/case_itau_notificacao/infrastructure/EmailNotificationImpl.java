@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 public class EmailNotificationImpl implements SendingNotificationInterface {
 
     private final JavaMailSender emailSender;
-    private final SimpleMailMessage email;
 
     @Override
     public void sendNotification(String message) {
+        SimpleMailMessage email = new SimpleMailMessage();
         email.setFrom("lucasvinipro23@gmail.com ");
         email.setTo("lucasvinipro23@gmail.com");
         email.setSubject("Cobrança da Divida");
